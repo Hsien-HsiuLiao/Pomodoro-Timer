@@ -1,0 +1,38 @@
+
+
+header {
+  background-color: #c8ff00;
+}
+
+body {
+  background-color: black;
+}
+
+.text{
+  color:white;
+}
+
+button{
+  background-color:black;
+  color:white;
+}
+div{
+  color:white;
+}
+
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: #4CAF50;
+}
+
+#circle {
+  
+  height:10px;
+  background-color:#4CAF50;
+}

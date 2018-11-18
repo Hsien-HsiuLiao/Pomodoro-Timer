@@ -1,2 +1,2 @@
 # pomodoro-timer
-###created using jQuery
+### created using jQuery

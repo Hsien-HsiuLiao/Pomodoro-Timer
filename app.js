@@ -1,8 +1,10 @@
 $(document).ready(function() {
+  
   break_val=5;
   var audiofile = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
   session_len=25;
   count=session_len*60;
+  
   //decrease or increase break length
   //cannot change time while timer on
   var timer_on=false;

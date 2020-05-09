@@ -1,7 +1,7 @@
 $(document).ready(function() {
   
   break_val=5;
-  var audiofile = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+  var audiofile = new Audio('./sounds/bells-tibetan.mp3');
   session_len=25;
   count=session_len*60;
   
@@ -21,7 +21,7 @@ $(document).ready(function() {
       $(".break").html(break_val+ " min");
       }
     });
-  //dec or inc session
+  //decrease or increase session length
     $("#dec_sess").on("click", function(){
       if (timer_on==false && session_len>1){
         session_len--;
@@ -30,7 +30,6 @@ $(document).ready(function() {
         $(".countdown").html(session_len);
       }
       });
-  
     $("#inc_sess").on("click", function(){
       if (timer_on==false){
         session_len++;
@@ -54,23 +53,29 @@ $(document).ready(function() {
         intervalID=setInterval(show_countdown, 1000);
       
       //intervalID=setInterval(show_countdown, 100); faster testing
+  
       //progress bar
       var elem = document.getElementById("myBar");   
-  var width = 1;
-  var id = setInterval(frame, 1000);
-  function frame() {
-    if (width >= 100) {
-      clearInterval(id);
+      var width = 0;
+      var barTimer = 0;
+      var totalTime = count;
+      var id = setInterval(frame, 1000);
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
       
-    } else {
-      width++; 
-      elem.style.width = width + '%'; 
-    }
-  }
+        } else {
+            barTimer++;
+            width=(barTimer/totalTime)*100; 
+            console.log('totalTime: ', totalTime/60);
+            console.log('width: ', width);
+            elem.style.width = width + '%'; 
+          }
+      }
       //progress bar
       
     break_status=false;
-    
+      //shows time countdown of Session or Break time
     function show_countdown(){
       timer_on=true;
       count--;
@@ -78,13 +83,15 @@ $(document).ready(function() {
         if(break_status==false){
           break_status=true;
           count=break_val*60;
-          $(".current_status").html("Break!");
-        $(".countdown").html(count);
+          audiofile.play();
+          $(".current_status").html("Break time!");
+          $(".countdown").html(count);
         }
         else if (break_status==true){
           break_status=false;
           count=session_len*60;
           $(".countdown").html(count);
+          audiofile.play();
           $(".current_status").html("Session");
         }
       }// end if count ==0
@@ -106,15 +113,12 @@ $(document).ready(function() {
       }
     }); //end onclick
   //audio
-  myAudio=document.getElementById('audio2');
-  myAudio.addEventListener('canplaythrough', function() {
-    this.currentTime = 12;
-    this.play();
-  });
+  //myAudio=document.getElementById('audio2');
+  //myAudio.addEventListener('canplaythrough', function() {
+  //  this.currentTime = 12;
+  //  this.play();
+  //});
   //end audio
-  //start progress
- 
-  
-  
+  //start progress  
 });
       

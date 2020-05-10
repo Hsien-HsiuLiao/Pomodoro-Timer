@@ -3,7 +3,11 @@
 
 Todo: 
 
-when timer is up, make a sound. Also have several sounds to choose from. button to stop sound
+when timer is up, make a sound. (Added 5/9/20)
+
+Also have several sounds to choose from. 
+
+button to stop sound
 
 send a text message
 
@@ -11,6 +15,7 @@ send a text message
 
 
 Reference:
+
 http://soundbible.com/free-sound-effects-1.html
 
 

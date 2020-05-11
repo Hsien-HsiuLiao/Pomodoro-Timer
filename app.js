@@ -67,8 +67,6 @@ $(document).ready(function() {
         } else {
             barTimer++;
             width=(barTimer/totalTime)*100; 
-            console.log('totalTime: ', totalTime/60);
-            console.log('width: ', width);
             elem.style.width = width + '%'; 
           }
       }
@@ -109,16 +107,11 @@ $(document).ready(function() {
         $(".countdown").html(Math.trunc(count/60)+":" + count%60);
       clearInterval(intervalID);
       timer_on=false;
-     // alert(intervalID);
+     
       }
     }); //end onclick
-  //audio
-  //myAudio=document.getElementById('audio2');
-  //myAudio.addEventListener('canplaythrough', function() {
-  //  this.currentTime = 12;
-  //  this.play();
-  //});
-  //end audio
+  
+    
   //start progress  
 });
       

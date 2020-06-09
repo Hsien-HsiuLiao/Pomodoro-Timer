@@ -42,7 +42,7 @@ $(document).ready(function() {
   var clickcount=2;
   var intervalID=0;
     
-  $("#count_button").on("click", function(){
+  $("#clock").on("click", function(){
       //second click should pause countdown, third restart, etc
     clickcount++;
    
@@ -53,7 +53,7 @@ $(document).ready(function() {
         intervalID=setInterval(show_countdown, 1000);
       
       //intervalID=setInterval(show_countdown, 100); faster testing
-  
+      /*
       //progress bar
       var elem = document.getElementById("myBar");   
       var width = 0;
@@ -71,18 +71,24 @@ $(document).ready(function() {
           }
       }
       //progress bar
+      */
       //circle timer
       var elem = document.getElementById("timer"); 
-  var height = 235;
-  var id = setInterval(frame, 100);
-  function frame() {
-      if (height <= 20) {
+      var height = 235;
+      var timeElapsed = 0;
+      var totalTime = count;
+      var id = setInterval(frame, 1000);
+      function frame() {
+        if (height <= 20) {
           clearInterval(id);
-      } else {
-          height--; 
-          elem.style.height = height + 'px'; 
+        } else {
+          //height--; 
+          //elem.style.height = height + 'px';
+          timeElapsed++;
+          console.log(height*(totalTime-timeElapsed)/totalTime) 
+          elem.style.height = (height*(totalTime-timeElapsed)/totalTime) + 'px';
+        }
       }
-  }
   //end circle timer
       
     break_status=false;
@@ -129,6 +135,7 @@ $(document).ready(function() {
 
  
 });
+/*
  //move
  function move() {
   var elem = document.getElementById("timer"); 
@@ -143,6 +150,6 @@ $(document).ready(function() {
       }
   }
 }
-
+*/
 
       

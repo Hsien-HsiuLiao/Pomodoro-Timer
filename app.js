@@ -71,6 +71,19 @@ $(document).ready(function() {
           }
       }
       //progress bar
+      //circle timer
+      var elem = document.getElementById("timer"); 
+  var height = 235;
+  var id = setInterval(frame, 100);
+  function frame() {
+      if (height <= 20) {
+          clearInterval(id);
+      } else {
+          height--; 
+          elem.style.height = height + 'px'; 
+      }
+  }
+  //end circle timer
       
     break_status=false;
       //shows time countdown of Session or Break time
@@ -113,5 +126,23 @@ $(document).ready(function() {
   
     
   //start progress  
+
+ 
 });
+ //move
+ function move() {
+  var elem = document.getElementById("timer"); 
+  var height = 235;
+  var id = setInterval(frame, 100);
+  function frame() {
+      if (height <= 20) {
+          clearInterval(id);
+      } else {
+          height--; 
+          elem.style.height = height + 'px'; 
+      }
+  }
+}
+
+
       

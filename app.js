@@ -103,6 +103,8 @@ $(document).ready(function() {
           audiofile.play();
           $(".current_status").html("Break time!");
           $(".countdown").html(count);
+          //change circle to red
+          document.getElementById("greenCircle").style.backgroundColor = 'red';
         }
         else if (break_status==true){
           break_status=false;

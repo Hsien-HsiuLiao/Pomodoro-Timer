@@ -1,7 +1,7 @@
 $(document).ready(function() {
   
   break_val=5;
-  var audiofile = new Audio('./sounds/bells-tibetan.mp3');
+  var audiofile = new Audio('./sounds/service-bell.mp3');
   session_len=25;
   count=session_len*60;
   

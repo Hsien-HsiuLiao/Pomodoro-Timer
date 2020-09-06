@@ -8,21 +8,25 @@ $(document).ready(function() {
   //decrease or increase break length
   //cannot change time while timer on
   var timer_on=false;
-    $("#dec_break").on("click", function(){
-      if (timer_on==false && break_val>1){
+  $("#decBreakTime").on("click", function(){
+      if ( !timer_on && break_val > 1 ){
         break_val--;
-        $(".break").html(break_val+" min");
+        updateBreakTime(break_val);
       }
     });
   
-    $("#inc_break").on("click", function(){
-      if (timer_on==false){
+  $("#inc_break").on("click", function(){
+      if ( !timer_on ) {
         break_val++;
-      $(".break").html(break_val+ " min");
+        updateBreakTime(break_val);
       }
     });
+
+  function updateBreakTime (time) {
+      $("#breakTime").html(time+ " min");
+    }
   //decrease or increase session length
-    $("#dec_sess").on("click", function(){
+  $("#dec_sess").on("click", function(){
       if (timer_on==false && session_len>1){
         session_len--;
         count=session_len*60;
@@ -30,7 +34,7 @@ $(document).ready(function() {
         $(".countdown").html(session_len);
       }
       });
-    $("#inc_sess").on("click", function(){
+  $("#inc_sess").on("click", function(){
       if (timer_on==false){
         session_len++;
         count=session_len*60;
@@ -116,19 +120,18 @@ $(document).ready(function() {
       }// end if count ==0
       else{
         if(count%60<10){
-        $(".countdown").html(Math.trunc(count/60)+":0" + count%60)  
+          $(".countdown").html(Math.trunc(count/60)+":0" + count%60)  
         }
         else{
-        $(".countdown").html(Math.trunc(count/60)+":" + count%60);
+          $(".countdown").html(Math.trunc(count/60)+":" + count%60);
         }
       }
     }//end showcountdown
     }//end if start/restart click
-    else if((clickcount%2)==0){
-        $(".countdown").html(Math.trunc(count/60)+":" + count%60);
+    else if((clickcount%2)==0) {
+      $(".countdown").html(Math.trunc(count/60)+":" + count%60);
       clearInterval(intervalID);
       timer_on=false;
-     
       }
     }); //end onclick
   

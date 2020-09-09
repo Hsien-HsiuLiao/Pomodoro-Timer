@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
     <title>Pomodoro Timer</title>
       <script type="text/javascript" charset="utf-8"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -10,43 +11,46 @@
   </head>
   <body>
     <header>
-      <h1 align=center>Pomodoro Timer</h1>
+      <h1 align="center">Pomodoro Timer</h1>
     </header>
 <!-- Buttons to control work/break times-->    
     <section id="app">
     <div class="row">
       <div class="col-xs-6" align="right">
         Break length
-        <br>
-        <button id="decBreakTime" class="btn"> - </button>
-        <b id="breakTime">5 min</b>
-        <button id="incBreakTime" class="btn"> + </button>
+        <div>
+          <button id="decBreakTime" class="btn" onclick="updateBreakTime('decrease')"> - </button>
+          <b id="breakTime">5</b><span> min</span>
+          <button id="incBreakTime" class="btn" onclick="updateBreakTime('increase')"> + </button>
+        </div>
       </div>
 
       <div class="col-xs-6" >
         Session length
         <div>
           <button id="decSessionTime" class="btn"> - </button>
-          <b class="session">25 min</b>
+          <b id="sessionTime">25 min</b>
           <button id="incSessionTime" class="btn"> + </button>
         </div>
       </div>
     </div>
-<!-- Timer circle which shows visual of time countdown-->
+<!-- Timer circle animation which shows visual of time countdown 
+      timer element will decrease in size, revealing greenCircle element behind it
+      gives illusion that circle is filling from the bottom up-->
     <div class="row">
-      <div id="timer" onclick="move()">
+      <div id="timer" >
         <div id="greenCircle"></div>
         
         <div id="clock" class="btn">
-          <h1 class="current_status" style=color:white> Session </h1>
-          <h1 class="countdown"> 25 </h1>
+          <h1 id="timePeriod" style=color:white> Session </h1>
+          <h1 id="countDownDisplay"> 25 </h1>
         </div>
       </div>
     </div>
   </section>
-
+<!--
     <div class="row" align=center></div>
     <div id="myBar"></div> 
-
+-->
   </body>
 </html>  

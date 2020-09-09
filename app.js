@@ -1,50 +1,93 @@
-$(document).ready(function() {
-  
-  var audiofile = new Audio('./sounds/service-bell.mp3');
-  break_val=5;
-  session_len=25;
-  count=session_len*60;
+var breakLength = 5;  //default 5 minutes
+var sessionLength = 25; //default 25 minutes
+var countDownTimeSeconds = 25 * 60; //default time in seconds
   
   //decrease or increase break length
   //cannot change time while timer on
-  var timer_on=false;
-  $("#decBreakTime").on("click", function(){
-      if ( !timer_on && break_val > 1 ){
-        break_val--;
-        updateBreakTime(break_val);
+  //cannot decrease time below 1 min
+var timerOn = false;
+  
+function updateBreakTime(action) {
+  switch(action) {
+    case "decrease":
+      console.log('decrease');
+      if ( !timerOn && breakLength > 1 ){
+        breakLength--;
+//      document.getElementById("breakTime").innerHTML = breakLength;
+        };
+      break;
+    case "increase":
+      if ( !timerOn ) {
+        breakLength++;
+      }
+      break;
+    default:
+      // code block
+  };
+  document.getElementById("breakTime").innerHTML = breakLength; 
+  
+};
+
+
+$(document).ready(function() {
+  
+  var startSessionAudio = new Audio('./sounds/service-bell.mp3');
+  var breakTimeAudio = new Audio('./sounds/musicBox-breakTime.mp3');
+  
+  /*
+  $("#decBreakTime").on("click", () => {
+      if ( !timerOn && breakLength > 1 ){
+        breakLength--;
+        updateBreakTime(breakLength);
       }
     });
   
+
+  
   $("#incBreakTime").on("click", function(){
-      if ( !timer_on ) {
-        break_val++;
-        updateBreakTime(break_val);
+      if ( !timerOn ) {
+        breakLength++;
+        updateBreakTime(breakLength);
       }
     });
 
   function updateBreakTime (time) {
-      $("#breakTime").html(time+ " min");
+      $("#breakTime").html(time + " min");
     }
+
+    */
   //decrease or increase session length
   $("#decSessionTime").on("click", function(){
-      if ( !timer_on && session_len>1){
-        session_len--;
-        count=session_len*60;
-        $(".session").html(session_len +" min");
-        $(".countdown").html(session_len);
+      if ( !timerOn && sessionLength > 1){
+        sessionLength--;
+
+        updateSessionTime (sessionLength);
+      //  countDownTimeSeconds = sessionLength*60;
+      //  $("#sessionTime").html(sessionLength + " min");
+      //  $("#countDownDisplay").html(sessionLength);
       }
       });
+
   $("#incSessionTime").on("click", function(){
-      if ( !timer_on ){
-        session_len++;
-        count=session_len*60;
-        $(".session").html(session_len +" min");
-        $(".countdown").html(session_len);
+      if ( !timerOn ){
+        sessionLength++;
+
+        updateSessionTime (sessionLength);
+    //    countDownTimeSeconds= sessionLength*60;
+      //  $("#sessionTime").html(sessionLength + " min");
+        //$("#countDownDisplay").html(sessionLength);
       }  
      });
+
+  function updateSessionTime (time) {
+        countDownTimeSeconds= time*60;
+        $("#sessionTime").html(time + " min");
+        $("#countDownDisplay").html(time);
+  }
+
   
-  var clickcount=2;
-  var intervalID=0;
+  var clickcount = 2;
+  var intervalID = 0;
     
   $("#clock").on("click", function(){
       //second click should pause countdown, third restart, etc
@@ -52,66 +95,70 @@ $(document).ready(function() {
    
     
     if((clickcount%2)==1){
-      audiofile.play();
-      intervalID=setInterval(show_countdown, 1000);      
+      startSessionAudio.play();
+      intervalID = setInterval(show_countdown, 1000);      
       //intervalID=setInterval(show_countdown, 100); faster testing
 
       //circle timer
       var elem = document.getElementById("timer"); 
       var height = 235;
       var timeElapsed = 0;
-      var totalTime = count;
-      var id = setInterval(frame, 1000);
-      function frame() {
+      var totalTime = countDownTimeSeconds;
+      //if already counting down, don't dec again
+      var id = setInterval(decHeightTimerElem, 1000);
+      function decHeightTimerElem() {
         if (height <= 20) {
           clearInterval(id);
         } else {
           //height--; 
           //elem.style.height = height + 'px';
           timeElapsed++;
-          console.log(height*(totalTime-timeElapsed)/totalTime) 
-          elem.style.height = (height*(totalTime-timeElapsed)/totalTime) + 'px';
+        //  console.log(height*(totalTime-timeElapsed)/totalTime) 
+          elem.style.height = (height * (totalTime-timeElapsed)/totalTime) + 'px';
         }
       }
       //end circle timer
       
-      break_status=false;
+      breakStatus=false;
       //shows time countdown of Session or Break time
       function show_countdown(){
-        timer_on=true;
-        count--;
-        if (count==0){
-          if(break_status==false){
-            break_status=true;
-            count=break_val*60;
-            audiofile.play();
-            $(".current_status").html("Break time!");
-            $(".countdown").html(count);
+        timerOn=true;
+        countDownTimeSeconds--;
+        if (countDownTimeSeconds==0){
+          if(breakStatus==false){
+            breakStatus=true;
+            countDownTimeSeconds=breakLength*60;
+            breakTimeAudio.play();
+            $("#timePeriod").html("Break time!");
+            //reset timer element height
+            document.getElementById("timer").style.height = 235;
+
+            $("#countDownDisplay").html(countDownTimeSeconds);
           //change circle to red
             document.getElementById("greenCircle").style.backgroundColor = 'red';
           }
-          else if (break_status==true){
-            break_status=false;
-            count=session_len*60;
-            $(".countdown").html(count);
-            audiofile.play();
-            $(".current_status").html("Session");
+          else if (breakStatus==true){
+            breakStatus=false;
+            countDownTimeSeconds=sessionLength*60;
+            $("#countDownDisplay").html(countDownTimeSeconds);
+            startSessionAudio.play();
+            $("#timePeriod").html("Session");
           }
-        }// end if count ==0
+        }// end if countDownTimeSeconds ==0
         else{
-          if(count%60<10){
-            $(".countdown").html(Math.trunc(count/60)+":0" + count%60)  
+          if(countDownTimeSeconds%60 < 10){
+            $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":0" + countDownTimeSeconds%60)  
           }
         else{
-          $(".countdown").html(Math.trunc(count/60)+":" + count%60);
+          $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":" + countDownTimeSeconds%60);
         }
       }
     }//end showcountdown
     }//end if start/restart click
     else if((clickcount%2)==0) {
-      $(".countdown").html(Math.trunc(count/60)+":" + count%60);
+      $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":" + countDownTimeSeconds%60);
       clearInterval(intervalID);
-      timer_on=false;
+      timerOn=false;
       }
     }); //end onclick
  

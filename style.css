@@ -49,7 +49,8 @@ div{
   height:200px;
   width:200px;
   border-radius:50%;
-  margin:25px 600px;
+  margin:25px 600px; 
+  /* margin: 0 auto;*/
   z-index:-2;
   
 }
@@ -62,5 +63,6 @@ div{
   height:206px;
   width:206px;
   border-radius:50%;
-  margin:22px 597px;
+  /*margin: 0 auto;*/
+  margin:22px 597px; 
 }

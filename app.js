@@ -28,6 +28,28 @@ function updateBreakTime(action) {
   
 };
 
+function updateSessionTime(action) {
+  switch(action) {
+    case "decrease":
+      console.log('decrease');
+      if ( !timerOn && sessionLength > 1 ){
+        sessionLength--;
+        };
+      break;
+    case "increase":
+      if ( !timerOn ) {
+        sessionLength++;
+      }
+      break;
+    default:
+      // code block
+  };
+  document.getElementById("sessionTime").innerHTML = sessionLength; 
+  document.getElementById("countDownDisplay").innerHTML = sessionLength;
+  countDownTimeSeconds=sessionLength*60;
+
+  
+};
 
 $(document).ready(function() {
   
@@ -55,7 +77,7 @@ $(document).ready(function() {
       $("#breakTime").html(time + " min");
     }
 
-    */
+    
   //decrease or increase session length
   $("#decSessionTime").on("click", function(){
       if ( !timerOn && sessionLength > 1){
@@ -84,83 +106,85 @@ $(document).ready(function() {
         $("#sessionTime").html(time + " min");
         $("#countDownDisplay").html(time);
   }
+*/
+  function animateTimeElapsed () {
+    //circle timer
+    var elem = document.getElementById("timer"); 
+    var height = 235;
+    var timeElapsed = 0;
+    var totalTime = countDownTimeSeconds;
+    //if already counting down, don't dec again
+    var id = setInterval(decHeightTimerElem, 1000);
+    function decHeightTimerElem() {
+      if (height <= 20) {
+        clearInterval(id);
+      } else {
+        //height--; 
+        //elem.style.height = height + 'px';
+        timeElapsed++;
+      //  console.log(height*(totalTime-timeElapsed)/totalTime) 
+        elem.style.height = (height * (totalTime-timeElapsed)/totalTime) + 'px';
+      }
+    }
+    //end circle timer
+  };
 
-  
+  //shows time countdown of Session or Break time
+  function countDownTime(){
+    timerOn=true;
+    countDownTimeSeconds--;
+    if (countDownTimeSeconds==0){
+      if(breakStatus==false){
+        breakStatus=true;
+        countDownTimeSeconds=breakLength*60;
+        breakTimeAudio.play();
+        $("#timePeriod").html("Break time!");
+        //reset timer element height
+        //document.getElementById("timer").style.height = 235;
+        animateTimeElapsed();  
+        $("#countDownDisplay").html(countDownTimeSeconds);
+      //change circle to red
+        document.getElementById("coloredCircle").style.backgroundColor = 'red';
+      }
+      else if (breakStatus==true){
+        breakStatus=false;
+        countDownTimeSeconds=sessionLength*60;
+        $("#countDownDisplay").html(countDownTimeSeconds);
+        startSessionAudio.play();
+        $("#timePeriod").html("Session");
+        animateTimeElapsed();
+        document.getElementById("coloredCircle").style.backgroundColor = 'green';
+      }
+    }// end if countDownTimeSeconds ==0
+    else{
+      if(countDownTimeSeconds%60 < 10){
+        $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":0" + countDownTimeSeconds%60)  
+      }
+    else{
+      $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":" + countDownTimeSeconds%60);
+    }
+  }
+  }//end countdown
+
   var clickcount = 2;
   var intervalID = 0;
-    
   $("#clock").on("click", function(){
       //second click should pause countdown, third restart, etc
     clickcount++;
-   
-    
-    if((clickcount%2)==1){
+    if( (clickcount%2) == 1 ){
       startSessionAudio.play();
-      intervalID = setInterval(show_countdown, 1000);      
-      //intervalID=setInterval(show_countdown, 100); faster testing
-
-      //circle timer
-      var elem = document.getElementById("timer"); 
-      var height = 235;
-      var timeElapsed = 0;
-      var totalTime = countDownTimeSeconds;
-      //if already counting down, don't dec again
-      var id = setInterval(decHeightTimerElem, 1000);
-      function decHeightTimerElem() {
-        if (height <= 20) {
-          clearInterval(id);
-        } else {
-          //height--; 
-          //elem.style.height = height + 'px';
-          timeElapsed++;
-        //  console.log(height*(totalTime-timeElapsed)/totalTime) 
-          elem.style.height = (height * (totalTime-timeElapsed)/totalTime) + 'px';
-        }
-      }
-      //end circle timer
-      
+      intervalID = setInterval(countDownTime, 1000);      
+      //intervalID=setInterval(countDownTime, 100); faster testing
+      animateTimeElapsed();
       breakStatus=false;
-      //shows time countdown of Session or Break time
-      function show_countdown(){
-        timerOn=true;
-        countDownTimeSeconds--;
-        if (countDownTimeSeconds==0){
-          if(breakStatus==false){
-            breakStatus=true;
-            countDownTimeSeconds=breakLength*60;
-            breakTimeAudio.play();
-            $("#timePeriod").html("Break time!");
-            //reset timer element height
-            document.getElementById("timer").style.height = 235;
-
-            $("#countDownDisplay").html(countDownTimeSeconds);
-          //change circle to red
-            document.getElementById("greenCircle").style.backgroundColor = 'red';
-          }
-          else if (breakStatus==true){
-            breakStatus=false;
-            countDownTimeSeconds=sessionLength*60;
-            $("#countDownDisplay").html(countDownTimeSeconds);
-            startSessionAudio.play();
-            $("#timePeriod").html("Session");
-          }
-        }// end if countDownTimeSeconds ==0
-        else{
-          if(countDownTimeSeconds%60 < 10){
-            $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":0" + countDownTimeSeconds%60)  
-          }
-        else{
-          $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":" + countDownTimeSeconds%60);
-        }
-      }
-    }//end showcountdown
+      
     }//end if start/restart click
-    else if((clickcount%2)==0) {
-      $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":" + countDownTimeSeconds%60);
+    else if( (clickcount%2) == 0 ) {
+      $("#countDownDisplay").html( Math.trunc(countDownTimeSeconds/60) + ":" + countDownTimeSeconds%60 );
       clearInterval(intervalID);
       timerOn=false;
       }
-    }); //end onclick
+    }); //end clock onclick
  
 });
 

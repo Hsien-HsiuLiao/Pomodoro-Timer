@@ -1,31 +1,29 @@
 var breakLength = 5;  //default 5 minutes
 var sessionLength = 25; //default 25 minutes
 var countDownTimeSeconds = 25 * 60; //default time in seconds
-  
+var animationStarted = false;
   //decrease or increase break length
   //cannot change time while timer on
   //cannot decrease time below 1 min
 var timerOn = false;
   
 function updateBreakTime(action) {
-  switch(action) {
+  if ( !timerOn && breakLength > 1 ){
+    switch(action) {
     case "decrease":
       console.log('decrease');
-      if ( !timerOn && breakLength > 1 ){
         breakLength--;
-//      document.getElementById("breakTime").innerHTML = breakLength;
-        };
       break;
     case "increase":
-      if ( !timerOn ) {
+    //  if ( !timerOn ) {
         breakLength++;
-      }
+    //  }
       break;
-    default:
-      // code block
-  };
-  document.getElementById("breakTime").innerHTML = breakLength; 
+ //   default:
+    };
   
+  document.getElementById("breakTime").innerHTML = breakLength; 
+  };
 };
 
 function updateSessionTime(action) {
@@ -47,88 +45,49 @@ function updateSessionTime(action) {
   document.getElementById("sessionTime").innerHTML = sessionLength; 
   document.getElementById("countDownDisplay").innerHTML = sessionLength;
   countDownTimeSeconds=sessionLength*60;
-
-  
 };
 
-$(document).ready(function() {
-  
+$(document).ready(function() {  
   var startSessionAudio = new Audio('./sounds/service-bell.mp3');
-  var breakTimeAudio = new Audio('./sounds/musicBox-breakTime.mp3');
-  
+  var breakTimeAudio = new Audio('./sounds/musicBox-breakTime.mp3');  
   /*
-  $("#decBreakTime").on("click", () => {
-      if ( !timerOn && breakLength > 1 ){
-        breakLength--;
-        updateBreakTime(breakLength);
-      }
-    });
-  
-
-  
-  $("#incBreakTime").on("click", function(){
-      if ( !timerOn ) {
-        breakLength++;
-        updateBreakTime(breakLength);
-      }
-    });
-
-  function updateBreakTime (time) {
-      $("#breakTime").html(time + " min");
-    }
-
-    
-  //decrease or increase session length
-  $("#decSessionTime").on("click", function(){
-      if ( !timerOn && sessionLength > 1){
-        sessionLength--;
-
-        updateSessionTime (sessionLength);
-      //  countDownTimeSeconds = sessionLength*60;
-      //  $("#sessionTime").html(sessionLength + " min");
-      //  $("#countDownDisplay").html(sessionLength);
-      }
-      });
-
-  $("#incSessionTime").on("click", function(){
-      if ( !timerOn ){
-        sessionLength++;
-
-        updateSessionTime (sessionLength);
-    //    countDownTimeSeconds= sessionLength*60;
-      //  $("#sessionTime").html(sessionLength + " min");
-        //$("#countDownDisplay").html(sessionLength);
-      }  
-     });
-
   function updateSessionTime (time) {
         countDownTimeSeconds= time*60;
         $("#sessionTime").html(time + " min");
         $("#countDownDisplay").html(time);
-  }
-*/
-  function animateTimeElapsed () {
+  }*/
+  var decHeight;
+  function animateTimeElapsed (x) {
     //circle timer
+    const action = x;
+    console.log("action: "+action)
     var elem = document.getElementById("timer"); 
     var height = 235;
+    //if clickcount is first time {
     var timeElapsed = 0;
+    // }
     var totalTime = countDownTimeSeconds;
     //if already counting down, don't dec again
-    var id = setInterval(decHeightTimerElem, 1000);
+    console.log("setInterval decHeight");
+    if(action === "start"){
+      decHeight = setInterval(decHeightTimerElem, 1000);
+    }
+
+    if (action === "pause") {
+      clearInterval(decHeight);
+      console.log("pause");
+      decHeight = 0;
+      console.log("decHieght: "+ decHeight);
+    }
     function decHeightTimerElem() {
-      if (height <= 20) {
-        clearInterval(id);
-      } else {
-        //height--; 
-        //elem.style.height = height + 'px';
+      console.log("timercallaction: "+ action)
+      //  console.log("start");
         timeElapsed++;
       //  console.log(height*(totalTime-timeElapsed)/totalTime) 
         elem.style.height = (height * (totalTime-timeElapsed)/totalTime) + 'px';
-      }
     }
     //end circle timer
   };
-
   //shows time countdown of Session or Break time
   function countDownTime(){
     timerOn=true;
@@ -141,7 +100,7 @@ $(document).ready(function() {
         $("#timePeriod").html("Break time!");
         //reset timer element height
         //document.getElementById("timer").style.height = 235;
-        animateTimeElapsed();  
+        animateTimeElapsed("start");  
         $("#countDownDisplay").html(countDownTimeSeconds);
       //change circle to red
         document.getElementById("coloredCircle").style.backgroundColor = 'red';
@@ -152,7 +111,7 @@ $(document).ready(function() {
         $("#countDownDisplay").html(countDownTimeSeconds);
         startSessionAudio.play();
         $("#timePeriod").html("Session");
-        animateTimeElapsed();
+        animateTimeElapsed("start");
         document.getElementById("coloredCircle").style.backgroundColor = 'green';
       }
     }// end if countDownTimeSeconds ==0
@@ -171,17 +130,26 @@ $(document).ready(function() {
   $("#clock").on("click", function(){
       //second click should pause countdown, third restart, etc
     clickcount++;
-    if( (clickcount%2) == 1 ){
+    if( clickcount  === 3 ){
       startSessionAudio.play();
       intervalID = setInterval(countDownTime, 1000);      
       //intervalID=setInterval(countDownTime, 100); faster testing
-      animateTimeElapsed();
-      breakStatus=false;
-      
-    }//end if start/restart click
+      console.log("call animate start");
+      animateTimeElapsed("start");
+      breakStatus=false;      
+    }//end if start
+    
+    //restart click
+    else if( (clickcount%2) == 1 && clickcount !== 3){
+      intervalID = setInterval(countDownTime, 1000);  
+      animateTimeElapsed("start");
+      breakStatus=false;      
+    }
     else if( (clickcount%2) == 0 ) {
+      //pause time displayed and animation
       $("#countDownDisplay").html( Math.trunc(countDownTimeSeconds/60) + ":" + countDownTimeSeconds%60 );
       clearInterval(intervalID);
+      animateTimeElapsed("pause");
       timerOn=false;
       }
     }); //end clock onclick

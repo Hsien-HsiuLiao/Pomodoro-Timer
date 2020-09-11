@@ -43,7 +43,7 @@ div{
   
 }
 /* z-index has to be used with position */
-#greenCircle{
+#coloredCircle{
   position:absolute;
   background-color:green;
   height:200px;

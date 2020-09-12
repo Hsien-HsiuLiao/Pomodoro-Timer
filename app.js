@@ -21,30 +21,31 @@ function updateBreakTime(action) {
       break;
  //   default:
     };
-  
   document.getElementById("breakTime").innerHTML = breakLength; 
   };
 };
 
 function updateSessionTime(action) {
+  if ( !timerOn && sessionLength > 1 ){
+  
   switch(action) {
     case "decrease":
-      console.log('decrease');
-      if ( !timerOn && sessionLength > 1 ){
+  //    console.log('decrease');
         sessionLength--;
-        };
+    //    };
       break;
     case "increase":
-      if ( !timerOn ) {
+     // if ( !timerOn ) {
         sessionLength++;
-      }
+    //  }
       break;
-    default:
+   // default:
       // code block
   };
   document.getElementById("sessionTime").innerHTML = sessionLength; 
   document.getElementById("countDownDisplay").innerHTML = sessionLength;
-  countDownTimeSeconds=sessionLength*60;
+  countDownTimeSeconds = sessionLength*60;
+  };
 };
 
 $(document).ready(function() {  

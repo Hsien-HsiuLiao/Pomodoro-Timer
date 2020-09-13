@@ -11,13 +11,10 @@ function updateBreakTime(action) {
   if ( !timerOn && breakLength > 1 ){
     switch(action) {
     case "decrease":
-      console.log('decrease');
         breakLength--;
       break;
     case "increase":
-    //  if ( !timerOn ) {
         breakLength++;
-    //  }
       break;
  //   default:
     };
@@ -27,21 +24,15 @@ function updateBreakTime(action) {
 
 function updateSessionTime(action) {
   if ( !timerOn && sessionLength > 1 ){
-  
-  switch(action) {
-    case "decrease":
-  //    console.log('decrease');
+    switch(action) {
+      case "decrease":
         sessionLength--;
-    //    };
-      break;
-    case "increase":
-     // if ( !timerOn ) {
+        break;
+      case "increase":
         sessionLength++;
-    //  }
-      break;
+        break;
    // default:
-      // code block
-  };
+    };
   document.getElementById("sessionTime").innerHTML = sessionLength; 
   document.getElementById("countDownDisplay").innerHTML = sessionLength;
   countDownTimeSeconds = sessionLength*60;
@@ -51,12 +42,7 @@ function updateSessionTime(action) {
 $(document).ready(function() {  
   var startSessionAudio = new Audio('./sounds/service-bell.mp3');
   var breakTimeAudio = new Audio('./sounds/musicBox-breakTime.mp3');  
-  /*
-  function updateSessionTime (time) {
-        countDownTimeSeconds= time*60;
-        $("#sessionTime").html(time + " min");
-        $("#countDownDisplay").html(time);
-  }*/
+ 
   var decHeight;
   function animateTimeElapsed (x) {
     //circle timer
@@ -73,7 +59,6 @@ $(document).ready(function() {
     if(action === "start"){
       decHeight = setInterval(decHeightTimerElem, 1000);
     }
-
     if (action === "pause") {
       clearInterval(decHeight);
       console.log("pause");
@@ -103,7 +88,6 @@ $(document).ready(function() {
         //document.getElementById("timer").style.height = 235;
         animateTimeElapsed("start");  
         $("#countDownDisplay").html(countDownTimeSeconds);
-      //change circle to red
         document.getElementById("coloredCircle").style.backgroundColor = 'red';
       }
       else if (breakStatus==true){
@@ -116,14 +100,15 @@ $(document).ready(function() {
         document.getElementById("coloredCircle").style.backgroundColor = 'green';
       }
     }// end if countDownTimeSeconds ==0
+
     else{
       if(countDownTimeSeconds%60 < 10){
         $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":0" + countDownTimeSeconds%60)  
       }
-    else{
-      $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":" + countDownTimeSeconds%60);
+      else{
+        $("#countDownDisplay").html(Math.trunc(countDownTimeSeconds/60)+":" + countDownTimeSeconds%60);
+      }
     }
-  }
   }//end countdown
 
   var clickcount = 2;
@@ -156,6 +141,3 @@ $(document).ready(function() {
     }); //end clock onclick
  
 });
-
-
-      

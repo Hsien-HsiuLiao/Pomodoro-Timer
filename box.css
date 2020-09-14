@@ -1,0 +1,18 @@
+#boxes {
+    margin-top: 20px;
+
+}
+
+#boxes .box {
+    float:left;
+    text-align: center;
+    width: 30%;
+    padding: 10px;
+    border: 1px;
+    border-style: solid;
+}
+
+#boxes .box img {
+    width: 90px;
+}
+

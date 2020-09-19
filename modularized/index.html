@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Modular Pomodoro Timer</title>
+      <script type="text/javascript" charset="utf-8"></script>
+    <!--  <script src="node_modules/"></script> --> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script type="module" src="app.js"></script>
+      <script type="module" src="updateTime.js"></script>
+      
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+      <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 align="center">Pomodoro Timer</h1>
+    </header>
+<!-- Buttons to control work/break times-->    
+    <section id="app">
+    <div class="row">
+      <div class="col-xs-6" align="right">
+        Break length
+        <div>
+          <button id="decBreakTime" class="btn" onclick="updateBreakTime('decrease')"> - </button>
+          <b id="breakTime">5</b><span> min</span>
+          <button id="incBreakTime" class="btn" onclick="updateBreakTime('increase')"> + </button>
+        </div>
+      </div>
+      <div class="col-xs-6" >
+        Session length
+        <div>
+          <button id="decSessionTime" class="btn" onclick="updateSessionTime('decrease')"> - </button>
+          <b id="sessionTime">25</b><span> min</span>
+          <button id="incSessionTime" class="btn" onclick="updateSessionTime('increase')"> + </button>
+        </div>
+      </div>
+    </div>
+<!-- Timer circle elements which shows visual of time countdown 
+      timer element will decrease in size, revealing coloredCircle element behind it
+      gives illusion that circle is filling from the bottom up-->
+    <div class="row">
+      <div id="timer" >
+        <div id="coloredCircle"></div>
+        
+        <div id="clock" class="btn">
+          <h1 id="timePeriod" style=color:white> Session </h1>
+          <h1 id="countDownDisplay">  25 </h1>
+          <h6 id="clickMsg">(click here to start/stop timer)</h6>
+        </div>
+      </div>
+    </div>
+  </section>
+  </body>
+</html>  

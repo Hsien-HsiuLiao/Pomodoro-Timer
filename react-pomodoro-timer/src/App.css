@@ -36,3 +36,51 @@
     transform: rotate(360deg);
   }
 }
+
+#title{
+  width:400px;
+  margin:auto;
+  height:150px;
+}
+
+#breakbuttons {
+  margin:auto;
+  width:70px;
+ border-color:cyan;
+}
+
+#break_count{
+  
+  
+  border-color:red;
+}
+
+#sess_count{
+  
+  
+}
+
+#breaksess-container{
+  display:flex;
+  width:420px;
+  height:120px;
+  margin:auto;
+  border-color:green;
+}
+
+#timer{
+  width:300px;
+  margin:auto;
+  height:175px;
+}
+
+#start-stop-reset{
+  width:100px;
+  margin:auto;
+  height: 50px
+}
+div, #breakbuttons, #break_count {
+  border-radius:10px;
+  border-style:solid;
+  
+}

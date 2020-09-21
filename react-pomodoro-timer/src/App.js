@@ -1,4 +1,5 @@
 import React from 'react';
+import Break from './components/break';
 
 import './App.css';
 
@@ -10,7 +11,8 @@ function App() {
 
 <div id="title"><h1>Pomodoro Clock</h1></div>
 <div id="breaksess-container">
-  <div id="break_count"></div>
+  {/* <div id="break_count"></div> */}
+  <Break />
   <div id="sess_count">Session</div>
 </div>
 <div id="timer">timer</div>

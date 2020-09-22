@@ -1,5 +1,6 @@
 import React from 'react';
 import Break from './components/break';
+import Session from './components/session';
 
 import './App.css';
 
@@ -13,7 +14,8 @@ function App() {
 <div id="breaksess-container">
   {/* <div id="break_count"></div> */}
   <Break />
-  <div id="sess_count">Session</div>
+  {/* <div id="sess_count">Session</div> */}
+  <Session />
 </div>
 <div id="timer">timer</div>
 <div id="start-stop-reset">buttons</div>

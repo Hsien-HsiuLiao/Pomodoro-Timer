@@ -1,16 +1,15 @@
+import React from 'react';
+
 class Session extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
         count: 25
       };
-      // change code below this line
       this.increment=this.increment.bind(this);
       this.decrement = this.decrement.bind(this);
       this.reset = this.reset.bind(this);
-      // change code above this line
     }
-    // change code below this line
       increment() {
         this.setState({
           count: this.state.count + 1
@@ -31,7 +30,6 @@ class Session extends React.Component {
         })
       }
   
-    // change code above this line
     render() {
       return (
         <div>
@@ -46,4 +44,5 @@ class Session extends React.Component {
     }
   };
   
-  ReactDOM.render(<Session /> , document.getElementById("sess_count"));
+  //ReactDOM.render(<Session /> , document.getElementById("sess_count"));
+  export default Session;

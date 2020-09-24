@@ -20,3 +20,7 @@ http://soundbible.com/free-sound-effects-1.html
 
 
 https://www.w3schools.com/jsref/met_audio_play.asp
+
+https://github.com/Hsien-HsiuLiao/web-midi-api
+
+https://github.com/Hsien-HsiuLiao/webmidi
